@@ -1,4 +1,4 @@
-import styles from "../styles/MealItem.module.css";
+import styles from "../../styles/MealItem.module.css";
 
 const MealItem = (props) => {
   return (

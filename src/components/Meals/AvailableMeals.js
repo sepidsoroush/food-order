@@ -1,7 +1,7 @@
-import styles from "../styles/AvailableMeals.module.css";
-import DUMMY_MEALS from "../data/dummy-meals";
+import styles from "../../styles/AvailableMeals.module.css";
+import DUMMY_MEALS from "../../assets/dummy-meals";
 import MealItem from "./MealItem";
-import Card from "./UI/Card";
+import Card from "../UI/Card";
 
 const AvailableMeals = () => {
   return (

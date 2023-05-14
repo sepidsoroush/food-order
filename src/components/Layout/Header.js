@@ -1,5 +1,5 @@
-import styles from "../styles/Header.module.css";
-import meals from "../data/meals.jpg";
+import styles from "../../styles/Header.module.css";
+import meals from "../../assets/meals.jpg";
 
 const Header = () => {
   return (

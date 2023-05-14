@@ -1,4 +1,4 @@
-import styles from "../styles/MealsSummary.module.css";
+import styles from "../../styles/MealsSummary.module.css";
 
 const MealsSummary = () => {
   return (
