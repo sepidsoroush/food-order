@@ -1,9 +1,18 @@
+import { useContext } from "react";
 import styles from "../../styles/MealItem.module.css";
 import MealItemForm from "./MealItemForm";
+import CartContext from "../../context/cart-context";
 
 const MealItem = (props) => {
+  const { addItem } = useContext(CartContext);
+
   const AddMealHandeler = (amount) => {
-    console.log(amount);
+    addItem({
+      id: props.id,
+      name: props.name,
+      price: props.price * amount,
+      amount: amount,
+    });
   };
 
   return (

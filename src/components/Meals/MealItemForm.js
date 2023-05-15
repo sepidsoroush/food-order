@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "../../styles/MealItemForm.module.css";
 
 const MealItemForm = (props) => {
-  const [enteredAmount, setEnteredAmount] = useState(0);
+  const [enteredAmount, setEnteredAmount] = useState(1);
 
   const amountHandler = (event) => {
     setEnteredAmount(event.target.value);
@@ -10,7 +10,7 @@ const MealItemForm = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onAddItem(enteredAmount);
+    props.onAddItem(+enteredAmount);
   };
 
   return (
@@ -18,7 +18,7 @@ const MealItemForm = (props) => {
       <div className={styles.input}>
         <label htmlFor={props.id}>Amount</label>
         <input
-          id={"amount_" + props.id}
+          id={props.id}
           label="Amount"
           type="number"
           min={1}
@@ -26,7 +26,6 @@ const MealItemForm = (props) => {
           step={1}
           defaultValue={1}
           onChange={amountHandler}
-          //   value={enteredAmount}
         />
       </div>
       <button>+ Add</button>
