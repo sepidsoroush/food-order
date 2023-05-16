@@ -4,10 +4,10 @@ import MealItemForm from "./MealItemForm";
 import CartContext from "../../context/cart-context";
 
 const MealItem = (props) => {
-  const { addItem } = useContext(CartContext);
+  const { cartCtx } = useContext(CartContext);
 
   const AddMealHandeler = (amount) => {
-    addItem({
+    cartCtx.addItem({
       id: props.id,
       name: props.name,
       price: props.price * amount,
