@@ -17,7 +17,7 @@ const Cart = (props) => {
   };
 
   return (
-    <Modal>
+    <Modal onCloseCart={props.onCloseCart}>
       <div className={styles["cart-items"]}>
         {cartCtx.items.map((item) => (
           <CartItem
