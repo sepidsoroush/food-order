@@ -16,6 +16,10 @@ const Cart = (props) => {
     cartCtx.removeItem(id);
   };
 
+  const orderHandler = () => {
+    console.log("Ordering...");
+  };
+
   return (
     <Modal onCloseCart={props.onCloseCart}>
       <div className={styles["cart-items"]}>
@@ -38,7 +42,11 @@ const Cart = (props) => {
         <button className={styles["button--alt"]} onClick={props.onCloseCart}>
           Close
         </button>
-        {hasItem && <button className={styles.button}>Order</button>}
+        {hasItem && (
+          <button className={styles.button} onClick={orderHandler}>
+            Order
+          </button>
+        )}
       </div>
     </Modal>
   );
