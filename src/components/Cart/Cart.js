@@ -45,12 +45,13 @@ const Cart = (props) => {
       if (!response.ok) {
         throw new Error("Something went wrong!");
       }
-
+      setIsSubmitting(false);
       setSubmitted(true);
+      cartCtx.clearCart();
     } catch (error) {
+      setIsSubmitting(false);
       setHttpError(error);
     }
-    setIsSubmitting(false);
   };
 
   const cartItems = (
