@@ -23,8 +23,13 @@ const Cart = (props) => {
   };
 
   const submitOrderHandler = (userData) => {
-    console.log(userData);
-    console.log(cartCtx.items);
+    fetch("https://food-order-5faa4-default-rtdb.firebaseio.com/orders.json", {
+      method: "POST",
+      body: JSON.stringify({
+        user: userData,
+        oreder: cartCtx.items,
+      }),
+    });
   };
 
   const cartItems = (
