@@ -22,6 +22,11 @@ const Cart = (props) => {
     setCheckout(true);
   };
 
+  const submitOrderHandler = (userData) => {
+    console.log(userData);
+    console.log(cartCtx.items);
+  };
+
   const cartItems = (
     <ul className={styles["cart-items"]}>
       {cartCtx.items.map((item) => (
@@ -57,7 +62,9 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {checkout && <Checkout onCancel={props.onCloseCart} />}
+      {checkout && (
+        <Checkout onCancel={props.onCloseCart} onConfirm={submitOrderHandler} />
+      )}
       {!checkout && modalActions}
     </Modal>
   );
