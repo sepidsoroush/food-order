@@ -16,7 +16,8 @@
 }
 
 .actions {
-  text-align: right;
+  padding-top: 1rem;
+  text-align: center;
 }
 
 .actions button {
@@ -43,4 +44,12 @@
 .actions .button {
   background-color: #8a2b06;
   color: white;
+}
+.success {
+  text-align: center;
+  color: #0eb432;
+}
+.error {
+  color: #b40e0e;
+  text-align: center;
 }

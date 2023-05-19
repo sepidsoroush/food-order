@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, Fragment } from "react";
 import styles from "../../styles/Cart.module.css";
 import Modal from "../UI/Modal";
 import CartContext from "../../context/cart-context";
@@ -7,6 +7,10 @@ import Checkout from "./Checkout";
 
 const Cart = (props) => {
   const [checkout, setCheckout] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [httpError, setHttpError] = useState();
+
   const cartCtx = useContext(CartContext);
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItem = cartCtx.items.length > 0;
@@ -21,15 +25,32 @@ const Cart = (props) => {
   const orderHandler = () => {
     setCheckout(true);
   };
+  const goBackHandler = () => {
+    setCheckout(false);
+  };
 
-  const submitOrderHandler = (userData) => {
-    fetch("https://food-order-5faa4-default-rtdb.firebaseio.com/orders.json", {
-      method: "POST",
-      body: JSON.stringify({
-        user: userData,
-        oreder: cartCtx.items,
-      }),
-    });
+  const submitOrderHandler = async (userData) => {
+    try {
+      setIsSubmitting(true);
+      const response = await fetch(
+        "https://food-order-5faa4-default-rtdb.firebaseio.com/orders.json",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            user: userData,
+            oreder: cartCtx.items,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      setHttpError(error);
+    }
+    setIsSubmitting(false);
   };
 
   const cartItems = (
@@ -38,10 +59,10 @@ const Cart = (props) => {
         <CartItem
           key={item.id}
           name={item.name}
-          price={item.price}
           amount={item.amount}
-          onAdd={addItemHandler.bind(null, item)}
+          price={item.price}
           onRemove={removeItemHandler.bind(null, item.id)}
+          onAdd={addItemHandler.bind(null, item)}
         />
       ))}
     </ul>
@@ -60,17 +81,46 @@ const Cart = (props) => {
     </div>
   );
 
-  return (
-    <Modal onCloseCart={props.onCloseCart}>
-      {cartItems}
-      <div className={styles.total}>
-        <span>Total Amount</span>
-        <span>{totalAmount}</span>
-      </div>
+  const cartContent = (
+    <Fragment>
+      {!checkout && (
+        <>
+          {cartItems}
+          <div className={styles.total}>
+            <span>Total Amount</span>
+            <span>{totalAmount}</span>
+          </div>
+        </>
+      )}
       {checkout && (
-        <Checkout onCancel={props.onCloseCart} onConfirm={submitOrderHandler} />
+        <Checkout onConfirm={submitOrderHandler} onBack={goBackHandler} />
       )}
       {!checkout && modalActions}
+    </Fragment>
+  );
+
+  const isSubmittingContent = <p>Sending order data...</p>;
+
+  const submittedContent = (
+    <Fragment>
+      <p className={styles.success}>Successfully sent the order!</p>
+      <div className={styles.actions}>
+        <button className={styles.button} onClick={props.onCloseCart}>
+          Close
+        </button>
+      </div>
+    </Fragment>
+  );
+  const errorContent = (
+    <p className={styles.error}>Something went wrong, please try again!</p>
+  );
+
+  return (
+    <Modal onCloseCart={props.onCloseCart}>
+      {!isSubmitting && !submitted && !httpError && cartContent}
+      {isSubmitting && isSubmittingContent}
+      {!isSubmitting && submitted && submittedContent}
+      {httpError && errorContent}
     </Modal>
   );
 };

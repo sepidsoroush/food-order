@@ -119,9 +119,12 @@ const Checkout = (props) => {
         )}
       </div>
       <div className={styles.actions}>
-        <button type="button" onClick={props.onCancel}>
-          Cancel
+        <button type="button" onClick={props.onBack}>
+          Back
         </button>
+        {/* <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button> */}
         <button disabled={!formIsValid} className={styles.submit}>
           Confirm
         </button>
