@@ -12,6 +12,7 @@ These application was built using:
   - useContext
   - useEffects
   - useRef
+  - a **Custom Hook** for form validation (useInput)
 - React Portal (for more accessibility)
 - use ForwardRef to pass ref into custom components
 
@@ -22,6 +23,7 @@ These application was built using:
   - MealItemForm
   - MealsSummary
 - Cart
+  - Checkout
   - Cart
   - CartItem
   - CartIcon
